@@ -118,7 +118,7 @@ def timeline():
 @app.route('/public')
 def public_timeline():
     """Displays the latest messages of all users."""
-    return render_template('timeline.html', messages=query_db('''
+    return render_template('userfeed.html', messages=query_db('''
         select message.*, user.* from message, user
         where message.author_id = user.user_id
         order by message.pub_date desc limit ?''', [PER_PAGE]))
@@ -137,7 +137,7 @@ def user_timeline(username):
             follower.who_id = ? and follower.whom_id = ?''',
             [session['user_id'], profile_user['user_id']],
             one=True) is not None
-    return render_template('timeline.html', messages=query_db('''
+    return render_template('userfeed.html', messages=query_db('''
             select message.*, user.* from message, user where
             user.user_id = message.author_id and user.user_id = ?
             order by message.pub_date desc limit ?''',

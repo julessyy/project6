@@ -105,7 +105,7 @@ def timeline():
     """
     if not g.user:
         return redirect(url_for('public_timeline'))
-    return render_template('timeline.html', messages=query_db('''
+    return render_template('userfeed.html', messages=query_db('''
         select message.*, user.* from message, user
         where message.author_id = user.user_id and (
             user.user_id = ? or
